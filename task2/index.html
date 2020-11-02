@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jquery Events</title>
+    <script src="jquery-3.5.1.js"></script>
+    <script>
+        $ (function(){
+           
+            //1
+            $('.button1').click(function () {
+                window.alert("Button has been clicked using click()!");
+            });
+            
+            //2
+            $('.button2').bind('click', function () {
+                window.alert("Button has been clicked using bind()!");
+            });
+
+            //3
+            $('body').on({click: function() {
+                window.alert("Button has been clicked using on()!");
+                }
+                }, '.button3' );
+
+             //4- on button4 and button5
+             $('body').on('click', 'button', function () {
+                window.alert("Button has been clicked!");
+            });
+
+            //5
+            $('body').append('<div></div>');
+            $('div').css('width','400px').css('height','400px')
+                    .css('border','solid black 1px');
+            $("body").on("click mouseenter mouseleave", "div", function() {
+			alert("The div was either clicked, entered, or left!");
+            });
+            
+            //6 
+            $('body').append('<span></span>');
+        
+            $('body').on({
+                mouseenter: function () {
+                    window.alert('Mouse entered the div!');
+                    $('<span>Mouse entered the div!</span>').replaceAll('span');
+                },
+                mouseleave: function () {
+                    window.alert('Mouse left the div!');
+                    $('<span>Mouse left the div!</span>').replaceAll('span')
+                },
+                click: function () {
+                    window.alert('Mouse clicked the div!');
+                    $('<span>Mouse clicked the div!</span>').replaceAll('span');
+                }
+            }, 'div');
+
+            //7
+            $('a').click(function(event) {
+                var element = $(this);
+                if (element.attr('href').match('modulemedia.com')) {
+                    event.preventDefault();
+                    element.css('color','red');
+                    window.alert(event.target.nodeName + ' tag triggered the event');
+                }
+            });
+
+            //8
+            $(window).resize(function() {
+                $('div').text('Browser height: ' + $(window).height() + ' Browser width: ' + $(window).width() );
+            });
+
+            //9
+            $('input').focus(function() {
+                var elem = $(this);
+                if (elem[0].id == "focustext") {
+                    elem.css('background-color','#EDEDED');
+                }
+            });
+
+             $('input').blur(function() {
+                 $(this).css("background", "#FFFFFF");
+                });
+
+            // $('input').blur(function() {
+            //     var elem = $(this);
+            //     if (elem.attr('id').match('focustext')) {
+            //         elem.css('background-color','white');
+            //     }
+            // });
+
+            //10
+            $('form').submit(function(event) {
+                $('.input').each(function() {
+                    if($(this).val() == '') {
+                        $(this).css('border-color','red');
+                        window.alert((this).id + ' field is required');
+                    } else {
+                        $(this).css('border-color','green');
+                    }
+                });
+                event.preventDefault();
+            });
+        
+        });
+    </script>
+</head>
+<body>
+    <input class="button1" type="button" name="Button1" value="Click Button1">
+    <input class="button2" type="button" name="Button2" value="Click Button2">
+    <input class="button3" type="button" name="Button3" value="Click Button3">
+    <button id="button4">Click Button4</button>
+    <button id="button5">Click Button5</button><br><br>
+    
+    <a href="modulemedia.com">Module Media</a><br><br>
+    <strong>Show text area focus:</strong><br>
+    <input type="text" id="focustext"><br><br>
+    
+    <form>
+    <strong>Name:</strong><br>
+    <input type="text" id="name" class="input"><br>
+    <strong>Email:</strong><br>
+    <input type="text" id="email" class="input"><br>
+    <input type="submit" value="Submit"></button><br><br>
+    </form>
+</body>
+</html> 
+
+
